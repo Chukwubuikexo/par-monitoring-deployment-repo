@@ -1,0 +1,54 @@
+# Global route configuration
+route:
+  group_by: ['alertname']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 1h
+  receiver: 'web.hook'
+
+  # Define routing to different receivers based on alert labels
+  routes:
+    - match:
+        severity: 'critical'
+      receiver: 'email-critical'
+      group_wait: 10s
+      group_interval: 5m
+      repeat_interval: 1h
+
+    - match:
+        severity: 'warning'
+      receiver: 'email-warning'
+      group_wait: 10s
+      group_interval: 5m
+      repeat_interval: 1h
+
+receivers:
+  - name: 'web.hook'
+    webhook_configs:
+      - url: 'http://127.0.0.1:5001/'
+
+  - name: 'email-critical'
+    email_configs:
+      - to: 'mabnefo.m19@gmail.com'
+        from: 'mabnefo.m19@gmail.com'
+        smarthost: 'smtp.gmail.com:587'
+        auth_username: 'mabnefo.m19@gmail.com'
+        auth_password: 'bdthluzxzfqbcofw'
+        require_tls: true
+
+  - name: 'email-warning'
+    email_configs:
+      - to: 'mabnefo.m19@gmail.com'
+        from: 'mabnefo.m19@gmail.com'
+        smarthost: 'smtp.gmail.com:587'
+        auth_username: 'mabnefo.m19@gmail.com'
+        auth_password: 'bdthluzxzfqbcofw'
+        require_tls: true
+
+# Inhibition configuration
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'dev', 'instance']

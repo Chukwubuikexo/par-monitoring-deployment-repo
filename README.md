@@ -1,1 +1,2 @@
-Analyzing Scheme  *
+Analyzing Schema  - On downlaoding the csv files, i set to cleaning the data set, filling or wrong missing values and setting the type accordingly (currency, text, data/time). From my analysis, I considered a STAR schema best for the data modelling, and selected the Loan_Payment table to be the fact table. The table will capture loan payments and missed payments, which are central to calculating financial metrics like Payment at Risk (PAR).
+

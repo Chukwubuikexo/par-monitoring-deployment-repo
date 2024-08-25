@@ -1,0 +1,21 @@
+# postgres_exporter.yml
+
+# Connection settings for PostgreSQL
+pg:
+  conn_str: "postgresql://user:password@localhost:5432/autochek"
+
+# Databases to be excluded from scraping
+excluded_databases:
+  - "template0"
+  - "template1"
+
+# 
+databases:
+  - "autochek"
+
+# Custom queries for additional metrics
+#custom_queries:
+ # - name: "custom_metric"
+  #  query: "SELECT count(*) FROM my_table"
+   # metrics:
+    #  - "custom_metric_total"

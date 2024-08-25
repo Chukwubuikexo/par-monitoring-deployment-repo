@@ -7,21 +7,14 @@ In selecting a data warehouse for ELT/ETL pipeline, i settled for postgres becau
 ## PAR Days
 In calculating the PAR Days the loan payments table allows one loan for one or multiple payments, hence i removed existing primary key in Fact_loan table for a new composite primary key to address duplicates in loan_id column.
 
-## Monitoring and alerts
+## Monitoring and Alerting
+ - I settled with Prometheus and Alerting Manager for my Monitoring and Alerting on errors that occur when the pipeline is running. Prometheus, a time-based database and monitoring system scraps metrics every 60secs from the PostgreSQL via postgres_exporter.
+ - Prometheus is connected to the alert.rules.yml (attached) file path which contains set conditions under which Prometheus should trigger alerts (such as high rate of null values detected) based on the metrics it collects.
+ - The alert manager which is also connected to prometheus receives alerts from Prometheus and routes them to my email as configured.
 
 ## Challenges
-I had challenges setting the type for each column, as excel reverted the type after closing the csv file. As a solution i moved the table to Postgres and altered the data typer from the pgadmin interface. I also had to drawbacks in column name similarities, so i had to cross-check multiple times, and set a unified patter for naming all columns. 
+ - I had challenges setting the type for each column, as excel reverted the type after closing the csv file. As a solution i moved the table to Postgres and altered the data typer from the pgadmin interface.
+ - I had drawbacks in column name similarities, so i had to cross-check multiple times, and set a unified patter for naming all columns.
+ - Writing the query to calculate PAR Day was challenging but with research on youtube, documentation and online answers of similar problems i was able to calculate it
+ - Locating the compatible alertmanger and prometheus raw files for dowmload 
 
-### Tools and Techniques
-- **Web Scraping Tool:** Selenium was chosen for its suitability in handling the HTML structure and DOM elements of the site.
-- **Rate Limiting Prevention:** To mitigate rate limiting and IP blocking, I implemented User-Agents to randomize access and simulate human browsing. Additionally, request delays were introduced to further reduce the risk of detection.
-
-
-
-### Notifications
-- **Monitoring:** GitHub Actions is configured to send email notifications for both successful scraping operations and any errors or failures, ensuring timely monitoring and alerts.
-
-### Challenges
-- I had to search about five websites before settling for carsdirect
-- Selecting a scraping tool -  I first tested beautiful soup, but on further reasearch i found it less efficient in handling sites with IP blocking
-- I tried many yml settings to enable notifcations before reading github documentation on [notifications](https://github.com/notifications) 
